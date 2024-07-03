@@ -7,11 +7,12 @@ import pandas as pd
 
 class ArtifactReport():
     def __init__(self):
-        self.df = pd.DataFrame(columns=['class_id', 'x', 'y', 'z'])
+        self.df = pd.DataFrame(columns=['class_id', 'x', 'y', 'z','timestamp'])
         self.tollerance = 1
 
     # Callback function
     def update_df(self, data):
+        timestamp = data.header.stamp
         
         for detection in data.info:
             
@@ -37,7 +38,7 @@ class ArtifactReport():
         
 
             # Add the new entry
-            new_entry = {'class_id': detection.class_id, 'x': transformed_point.x, 'y': transformed_point.y, 'z': transformed_point.z}
+            new_entry = {'class_id': detection.class_id, 'x': transformed_point.x, 'y': transformed_point.y, 'z': transformed_point.z,'timestamp': timestamp}
             self.df = pd.concat([self.df, pd.DataFrame([new_entry])], ignore_index=True)
 
         rospy.loginfo("--------------START-----------")
@@ -50,7 +51,7 @@ class ArtifactReport():
 
 
     def export_csv(self):
-        self.df.to_csv('./src/extract_artifacts/detected_artifacts/detected_artifacts.csv', index=False)
+        self.df.to_csv('./src/extract_artifacts/detected_artifacts/detected_artifacts.csv', header=['class_id','x','y','z','timestamp'], index=False)
 
 
 
