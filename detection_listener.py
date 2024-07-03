@@ -21,7 +21,8 @@ class ArtifactReport():
             
 
             # Transform coordinates
-            transformed_point = transform_point(detection.position, "rgb_camera_optical_link", "world_graph_msf")
+            # transformed_point = transform_point(detection.position, "rgb_camera_optical_link", "world_graph_msf")
+            transformed_point = transform_point(detection.position, "rgb_camera_optical_link", "map_o3d")
             #rospy.loginfo("World Frame: x=%f, y=%f, z=%f", transformed_point.x, transformed_point.y, transformed_point.z)
 
             # Check if already detected
